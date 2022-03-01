@@ -2,11 +2,9 @@
 #include <string.h>
 
 
-int viewInvtoryList;
+FILE *inventoryFile;
 unsigned char userChoice[2];
 int mainMenu();
-FILE *inventoryFile;
-
 
 
 int main(){
@@ -19,8 +17,6 @@ int main(){
         fclose(inventoryFile);
         mainMenu();
     }
-    
-    mainMenu();
  
     return 0;
 }
