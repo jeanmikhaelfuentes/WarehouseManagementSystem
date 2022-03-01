@@ -36,7 +36,7 @@ int userInput()
 	scanf("%s", &input);
 	printf("--------------------------------------------------\n");
 	if (strlen(input) != 5 || input[0] == '-' || input[0] == '\n') { //invalid input
-		printf("Please input exactly positive 5 digit numbers. \n");
+		printf("Please input only positive 5 digit numbers. \n");
 		printf("Please try again another input.\n");
 		userInput();
 	}
@@ -46,31 +46,46 @@ int userInput()
 		while (fgets (p1, 255, fp)) //fgets(char p1, 255(number of characters to copy), file pointer)
 		{
 		strncpy(p2, p1, sizeof(p2));
-		//printf("%s", p1);
-		data = strtok(p2, ",");
+		//printf("p1 = %s\n", p1);
 		
+		data = strtok(p2, ",");
+		//printf("p2 = %s\n", p2);
 			while (data)
 			{
 				if (strcmp(input, data) == 0)
 				{
 					found = 1;
 					int choice;
+					char id[255];
+					char desc[255];
+					char price[255];
+					char *id1;
+					char *id2;
 					printf("--------------------------------------------------\n");
-					printf("ITEM ID\t\tITEM DESCRIPTION\tITEM PRICE\n");
+					printf("ITEM ID\t\tITEM DESCRIPTION\t\tITEM PRICE\n");
 					printf("--------------------------------------------------\n");
-					printf("TBA\t\tTBA\t\t\tTBA\n");
-					printf("\nWould you like to try searching another item?\n");
-					printf("Press: 1 - YES, 2 - BACK TO MAIN MENU\nPlease input your choice: ");
-					scanf("%d", &choice);
+					//printf("%s\n", p1);
+					id1 = strtok(p1, ",\"\"");
+					//id2 = strtok(id1, ",\"\"");
+					//printf("%s\n", id1);
+					while (id1 != NULL){
+						printf("%s\t\t", id1);
+						
+						id1 = strtok(NULL, ",\"\"");
+					}
+					//strcpy()
+					//printf("\nWould you like to try searching another item?\n");
+					//printf("Press: 1 - YES, 2 - BACK TO MAIN MENU\nPlease input your choice: ");
+					//scanf("%d", &choice);
 					//printf("You have entered: %d", choice);
-					switch(choice)
-						{
-						case 1: userInput();
+					//switch(choice)
+					//	{
+					//	case 1: userInput();
 					//	case 2: searchMenu();
 					//	break;
-						default: printf("Please Choose what is shown!");
-						break;
-					}
+					//	default: printf("Please Choose what is shown!");
+					//	break;
+					//	}
 				}
 				data = strtok(NULL, ",");
 			}
