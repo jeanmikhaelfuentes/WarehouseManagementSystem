@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#define input_length 8
 
 int userInput();
 int concatenation();
@@ -14,11 +15,12 @@ int concatenation(char input[], int n)
 	strcat(input, qmark);
 	strcat(qmark, input);
 	strncpy(input, qmark, n);
+	return 0;
 }
 
 int userInput()
 {
-	char input[255];
+	char input[input_length]; //"11111\0"
 	int found = 0;
 	char p1[255];
 	char p2[255];
@@ -30,7 +32,7 @@ int userInput()
 	printf("\n");
 	if (strlen(input) != 5 || input[0] == '-' || input[0] == '\n') {
 		//for invalid input
-		printf("Please input only positive 5 digit numbers.\n");
+		printf("Please input exactly positive 5 digit numbers.\n");
 		printf("Please try again another input.\n");
 		userInput();
 	}
@@ -152,4 +154,5 @@ int main()
 {
 	printf("SEARCH FOR AN ITEM\n");
 	userInput();
+	return 0;
 }
