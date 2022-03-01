@@ -4,7 +4,7 @@ char userChoice[2];
 
 int main(){
     
-    FILE *inventoryFile = fopen("./Data/inventory.csv", "r");
+    FILE *inventoryFile = fopen("Inventory.csv", "r");
  
         char buffer[1024];
  
