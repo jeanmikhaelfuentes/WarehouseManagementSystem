@@ -4,7 +4,7 @@ char userChoice[2];
 
 int main(){
     
-        FILE *inventoryFile = fopen("./Data/Inventory.csv", "r");
+        FILE *inventoryFile = fopen("Inventory.csv", "r");
         char buffer[1024];
 
         if (fgets(buffer, sizeof(buffer), inventoryFile) == NULL){
@@ -35,13 +35,11 @@ int main(){
         }else{
             int row = 0;
             int column = 0;
-            printf("ID\tDescription\t\t\t\tQuantity\tExp. Date\tPrices(PHP)\n\n");
+            printf("ID\tDescription\t\t\t\tQuantity\tExp. Date\tPrices (PHP)\n\n");
             while (fgets(buffer, 1024, inventoryFile)) {
                 column = 0;
                 row++;
-                if (row == 1)
-                    continue;
-    
+
                 // Splitting the data
                 char* value = strtok(buffer, ",\"\"");
     
