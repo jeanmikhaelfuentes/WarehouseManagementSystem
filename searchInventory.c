@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#define input_length 8
+#define INPUT_LENGTH 8
 
 int userInput();
 int concatenation();
@@ -20,7 +20,8 @@ int concatenation(char input[], int n)
 
 int userInput()
 {
-	char input[input_length]; //"11111\0"
+	char input[INPUT_LENGTH]; //"11111\0"
+	//printf("%d", sizeof(input));
 	int found = 0;
 	char p1[255];
 	char p2[255];
@@ -29,8 +30,11 @@ int userInput()
 	fp = fopen("Inventory_ST_NoBOM.csv", "r+");
 	printf("\n\nPlease input item ID number: ");
 	scanf("%s", &input);
-	printf("\n");
-	if (strlen(input) != 5 || input[0] == '-' || input[0] == '\n') {
+	printf("\nYou are searching for an item with ID number %s...\n", input);
+	//printf("%d", sizeof(input));
+	if (strlen(input) != 5 || input[0] == '-' || isdigit(input[0]) == 0 || isdigit(input[1]) == 0 || isdigit(input[2]) == 0 ||
+		isdigit(input[3]) == 0 || isdigit(input[4]) == 0)
+	{
 		//for invalid input
 		printf("Please input exactly positive 5 digit numbers.\n");
 		printf("Please try again another input.\n");
@@ -39,19 +43,17 @@ int userInput()
 	else {
 		//valid input
 	concatenation(input, sizeof(input));
-		while (fgets (p1, 255, fp))
-		//fgets(char p1, 255(number of characters to copy), file pointer)
+		while (fgets (p1, sizeof(p1), fp))
+		//fgets(char p1, sizeofp1 is the number of characters to be copied, file pointer)
 		{
 		strncpy(p2, p1, sizeof(p2));
+		//printf("%d", sizeof(p2));
 		data = strtok(p2, ",");
 			while (data)
 			{
 				if (strcmp(input, data) == 0)
 				{
 					found = 1;
-					char id[255];
-					char desc[255];
-					char price[255];
 					char *id1;
 					char *id2;
 					int column, row;
