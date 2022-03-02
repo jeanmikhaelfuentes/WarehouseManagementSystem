@@ -273,7 +273,7 @@ void newValues(FILE *fp1, char *data, int j)
                     fprintf(fp1, "%s", data);
                     break;
                 }
-                if (1)
+                if (price_input_check(P1.Price, len, len))
                 {
                     p = atof(P1.Price);
                     fprintf(fp1, "\"%.2f\"\n", p);
@@ -285,7 +285,7 @@ void newValues(FILE *fp1, char *data, int j)
             break;
     }
 }
-
+// main function for searching and overwriting updates
 int update(char *temp)
 {
     int found;
@@ -352,7 +352,7 @@ int update(char *temp)
 
     return match;
 }
-
+// calling update function in a loop
 void main()
 {
     char temp[255]; 
