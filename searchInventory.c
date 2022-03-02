@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#define input_length 8
+#define INPUT_LENGTH 8
 
 int userInput();
 int concatenation();
-unsigned char choice[2];
+unsigned char userChoice[2];
 FILE *fp;
 
 int concatenation(char input[], int n)
@@ -20,17 +20,20 @@ int concatenation(char input[], int n)
 
 int userInput()
 {
-	char input[input_length]; //"11111\0"
+	char input[INPUT_LENGTH]; //"11111\0"
+	//printf("%d", sizeof(input));
 	int found = 0;
 	char p1[255];
 	char p2[255];
 	char *data;
 	char *in;
-	fp = fopen("Inventory_ST_NoBOM.csv", "r+");
+	fp = fopen("Inventory_ST_NoBOM.csv", "r");
 	printf("\n\nPlease input item ID number: ");
-	scanf("%s", &input);
-	printf("\n");
-	if (strlen(input) != 5 || input[0] == '-' || input[0] == '\n') {
+	scanf("%s", input);
+	//printf("%d", sizeof(input));
+	if (strlen(input) != 5 || input[0] == '-' || isdigit(input[0]) == 0 || isdigit(input[1]) == 0 || isdigit(input[2]) == 0 ||
+		isdigit(input[3]) == 0 || isdigit(input[4]) == 0)
+	{
 		//for invalid input
 		printf("Please input exactly positive 5 digit numbers.\n");
 		printf("Please try again another input.\n");
@@ -38,20 +41,19 @@ int userInput()
 	}
 	else {
 		//valid input
-	concatenation(input, sizeof(input));
-		while (fgets (p1, 255, fp))
-		//fgets(char p1, 255(number of characters to copy), file pointer)
+		printf("\nYou are searching for a item with ID number %s...\n\n", input);
+		concatenation(input, sizeof(input));
+		while (fgets (p1, sizeof(p1), fp))
+		//fgets(char p1, sizeofp1 is the number of characters to be copied, file pointer)
 		{
 		strncpy(p2, p1, sizeof(p2));
+		//printf("%d", sizeof(p2));
 		data = strtok(p2, ",");
 			while (data)
 			{
 				if (strcmp(input, data) == 0)
 				{
 					found = 1;
-					char id[255];
-					char desc[255];
-					char price[255];
 					char *id1;
 					char *id2;
 					int column, row;
@@ -87,22 +89,22 @@ int userInput()
 					}
 					printf("\nWould you like to try searching another item?\n");
 					printf("Press: Y - YES, B - BACK TO MAIN MENU\nPlease input your choice: ");
-					choice[1] = 1;
-					while(choice[1] == 1)
+					userChoice[1] = 1;
+					while(userChoice[1] == 1)
 					{
-						scanf(" %c", &choice[0]);
+						scanf(" %c", &userChoice[0]);
 						
-						switch(choice[0])
+						switch(userChoice[0])
 						{
 						case 'y':
 						case 'Y': 
 							userInput();
-							choice[1] = 0;
+							userChoice[1] = 0;
 							break;
 						//case 'b':
 						//case 'B':
 							//searchMenu();
-							//choice[1] = 0;
+							//userChoice[1] = 0;
 							//break;
 						default: 
 							printf("Please choose from what is shown.\nPlease input again: ");
@@ -112,8 +114,6 @@ int userInput()
 				}
 				data = strtok(NULL, ",");
 			}
-
-
 		}
 	fclose(fp);
 	if (found == 0)
@@ -122,22 +122,21 @@ int userInput()
 		printf("The item does not exists.\n");
 		printf("\nWould you like to try searching another item?\n");
 		printf("Press: Y - YES, B - BACK TO MAIN MENU\nPlease input your choice: ");
-		choice[1] = 1;
-		while(choice[1] == 1)
+		userChoice[1] = 1;
+		while(userChoice[1] == 1)
 		{
-			scanf(" %c", &choice[0]);
-				
-			switch(choice[0])
+			scanf(" %c", &userChoice[0]);		
+			switch(userChoice[0])
 			{
 				case 'y':
 				case 'Y': 
 						userInput();
-						choice[1] = 0;
+						userChoice[1] = 0;
 						break;
 				//case 'b':
 				//case 'B':
 						//searchMenu();
-						//choice[1] = 0;
+						//userChoice[1] = 0;
 						//break;
 				default: 
 						printf("Please choose from what is shown.\nPlease input again: ");
@@ -152,7 +151,7 @@ int userInput()
 	
 int main()
 {
-	printf("SEARCH FOR AN ITEM\n");
+	printf("\nSEARCH FOR AN ITEM\n");
 	userInput();
 	return 0;
 }
