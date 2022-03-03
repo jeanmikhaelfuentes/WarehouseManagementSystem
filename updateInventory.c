@@ -6,7 +6,7 @@
 #define EXP_DATE_LEN 12
 #define DESCRIPTION_LEN 52
 #define QUANTITY_LEN 6
-#define PRICE_LEN 22
+#define PRICE_LEN 13
 
 struct Products
 {
@@ -124,7 +124,6 @@ int expd_input_check(char *str, int input_len, int n)
         }
         if ((ch[5] > '1') || (ch[8] > '3'))
         {
-            printf("%c %c", ch[5], ch[8]);
             j = 0;
             printf("Input Expiry Date is Invalid! Please try again.\nNOTE: Follow this format (YYYY-MM-DD).\n");
             break;
@@ -143,14 +142,12 @@ int expd_input_check(char *str, int input_len, int n)
         }
         if ((ch[5] == '0') && (ch[6] == '2') && (ch[8] > '2'))
         {
-            j = 0;
+                j = 0;
                 printf("Input Expiry Date is Invalid! Please try again.\nNOTE: Follow this format (YYYY-MM-DD).\n");
                 break;
         }
-
         break;
     }
-
     return j;
 }
 // returns a 1 if input is valid & 0 otherwise.
@@ -162,7 +159,7 @@ int price_input_check(char *str, int input_len, int n)
     {
         j = 1;
         ch = str[i];
-        if ( ((isdigit(ch) == 0) && (ch != '.')) || (input_len > PRICE_LEN))
+        if (((isdigit(ch) == 0) && (ch != '.')) || (input_len > PRICE_LEN))
         {
             j = 0;
             printf("Input Price is Invalid! Please try again.\nNOTE: Price must be a number.\n");
