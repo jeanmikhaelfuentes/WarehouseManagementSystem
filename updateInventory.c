@@ -159,7 +159,7 @@ int price_input_check(char *str, int input_len, int n)
     {
         j = 1;
         ch = str[i];
-        if (((isdigit(ch) == 0) && (ch != '.')) || (input_len > PRICE_LEN))
+        if (((isdigit(ch) == 0) && (ch != '.')) || (input_len >= 10))
         {
             j = 0;
             printf("Input Price is Invalid! Please try again.\nNOTE: Price must be a number.\n");
