@@ -1,26 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#define ID_LEN 7
-#define EXP_DATE_LEN 12
-#define DESCRIPTION_LEN 52
-#define QUANTITY_LEN 6
-#define PRICE_LEN 13
 
-struct Products
-{
-    char ID[ID_LEN];
-    char Description[DESCRIPTION_LEN];
-    char Quantity[QUANTITY_LEN];
-    char ExpiryDate[EXP_DATE_LEN];
-    char Price[PRICE_LEN];
-}P1;
 // input function
 int input(char str[], int n)
 {
     char ch;
     int i;
+    fflush(stdin);
     for (i = 0; (ch = getchar()) != '\n'; i++)
     {
         if (i < n)
@@ -292,7 +276,7 @@ int update(char *temp)
     char *data;
     FILE *fp, *fp1;
 
-    fp = fopen("Inventory.csv", "r");
+    fp = fopen(INV_FILE, "r");
     fp1 = fopen("temp.csv", "w");
     conc(temp, sizeof(temp));
     printf("Searching for Product %s...\n", temp);
@@ -331,7 +315,7 @@ int update(char *temp)
     if (match)
     {
         fp1 = fopen("temp.csv", "r");
-        fp = fopen("Inventory.csv", "w");
+        fp = fopen(INV_FILE, "w");
         fflush(stdin);
         while (fgets(s1,sizeof(s1),fp1))
         {
@@ -350,7 +334,7 @@ int update(char *temp)
     return match;
 }
 // calling update function in a loop
-void main()
+int updateInventory()
 {
     char temp[255]; 
     int input_len = 0;
@@ -367,4 +351,5 @@ void main()
             }
         }
     }
+    endChoice();
 }

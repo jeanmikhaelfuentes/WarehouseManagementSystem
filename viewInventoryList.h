@@ -1,12 +1,9 @@
-#include <stdio.h>
-#include <string.h>
-char userChoice[2];
-void nullChecker();
-void endChoice();
-FILE *inventoryFile;
 int size;
 
-int main(){
+void nullChecker();
+void endChoice();
+
+int viewInventoryList(){
         nullChecker();
         char buffer[1024];
 
@@ -14,12 +11,12 @@ int main(){
         printf("Inventory is empty...\n\n");
         endChoice();
     }else{
-            inventoryFile = fopen("Inventory_ST_NoBOM.csv", "r");
+            fp = fopen("Inventory_ST_NoBOM.csv", "r");
             int row = 0;
             int column = 0;
             int i = 0;
             printf("ID\tDescription\t\t\t\tQuantity\tExp. Date\tPrices (PHP)\n\n");
-            while (fgets(buffer, 1024, inventoryFile)) {
+            while (fgets(buffer, 1024, fp)) {
                 column = 0;
                 row++;
                 // Splitting the data
@@ -47,39 +44,14 @@ int main(){
                 }
             }
         }
-    fclose(inventoryFile);
+    fclose(fp);
     endChoice();
     return 0;
 }
 
 void nullChecker(){
-    inventoryFile = fopen("Inventory_ST_NoBOM", "r");
-    fseek(inventoryFile, 0, SEEK_END);
-    size = ftell(inventoryFile);
-    fclose(inventoryFile);
+    fp = fopen("Inventory_ST_NoBOM", "r");
+    fseek(fp, 0, SEEK_END);
+    size = ftell(fp);
+    fclose(fp);
 }
-
-void endChoice(){
-    printf("\n\n\nExit or go back to main menu? (X -- Exit or M -- Main Menu)\n");
-    printf("Please input choice: ");
-    userChoice[1]=1;
-    while(userChoice[1]==1){
-        scanf(" %1c",&userChoice[0]);
-            switch(userChoice[0]){
-                case 'm':
-                case 'M':
-                    userChoice[1]=0;
-                    printf("Main Menu");
-                    //mainMenu();
-                    break;
-                case 'X':
-                case 'x':
-                    userChoice[1]=0;
-                    printf("Thank you for using our inventory management system");
-                    break;
-                default:
-                    printf("Invalid Input, please try again: ");
-                    userChoice[1]=1;
-            }
-        }
-    }

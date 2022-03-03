@@ -1,18 +1,22 @@
 #include <stdio.h>
 #include <string.h>
-FILE *inventoryFile;
-unsigned char userChoice[2];
-int mainMenu();
+#include <stdlib.h>
+#include <ctype.h>
+#include "globalDeclerations.h"
+//#include "addInventory.h"
+#include "updateInventory.h"
+#include "viewInventoryList.h"
+#include "searchInventory.h"
 
 
 int main(){
-    if(inventoryFile = fopen("inventory.csv", "r")){
-        fclose(inventoryFile);
+    if(fp = fopen(INV_FILE, "r")){
+        fclose(fp);
         mainMenu();
     }
     else{
-        inventoryFile = fopen("inventory.csv", "w");
-        fclose(inventoryFile);
+        fp = fopen(INV_FILE, "w");
+        fclose(fp);
         mainMenu();
     }
     return 0;
@@ -36,21 +40,25 @@ int mainMenu(){
         case 'a':
         case 'A': 
             printf("Add Inventory Item\n");
+            //addInventory();
             userChoice[1] = 0;
             break;
         case 'b':
         case 'B':
             printf("Update Inventory Item\n");
+            updateInventory();
             userChoice[1] = 0;
             break;
         case 'c':
         case 'C':
             printf("View Inventory List\n"); 
+            viewInventoryList();
             userChoice[1] = 0;
             break;
         case 'd':
         case 'D':
             printf("Search Inventory Item\n");
+            searchInventory();
             userChoice[1] = 0;
             break;
         case 'x':

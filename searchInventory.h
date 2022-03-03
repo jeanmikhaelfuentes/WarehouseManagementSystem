@@ -1,11 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#define ID_LEN 7
+
 int search(char *temp);
 int main();
-FILE *fp;
 
 int searchInput(char str[], int n)
 {
@@ -43,7 +38,7 @@ int id_searchInput_check(char str[], int input_len, int n)
     return j;
 }
 
-void conc(char *temp, int n)
+void concSearch(char *temp, int n)
 {
     char a[255] = "\"";
     strcat(temp, a);
@@ -59,8 +54,8 @@ int search(char *temp)
     char *data;
     FILE *fp;
     
-    fp = fopen("Inventory_ST_NoBOM.csv", "r");
-    conc(temp, sizeof(temp));
+    fp = fopen(INV_FILE, "r");
+    concSearch(temp, sizeof(temp));
     
     while (fgets(s1,sizeof(s1),fp))
     {
@@ -119,7 +114,7 @@ int search(char *temp)
 	//
 }
 
-int main()
+int searchInventory()
 {
     char temp[255]; 
     char choice[255];
@@ -137,5 +132,5 @@ int main()
             }
         }
     }
-
+    endChoice();
 }
