@@ -251,7 +251,7 @@ void newValues(FILE *fp1, char *data, int j)
                 if (strcmp(P1.Price, "\0") == 0)
                 {
                     printf("Price has no changes.\n");
-                    fprintf(fp1, "\"%s\"", data);
+                    fprintf(fp1, "\"%s\"\n", data);
                     break;
                 }
                 if (price_input_check(P1.Price, len, len))
