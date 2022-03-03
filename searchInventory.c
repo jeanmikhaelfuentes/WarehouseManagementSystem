@@ -2,156 +2,141 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#define INPUT_LENGTH 8
-
-int userInput();
-int concatenation();
-unsigned char userChoice[2];
+#define ID_LEN 7
+unsigned char userChoice;
+int search(char *temp);
+int main();
 FILE *fp;
 
-int concatenation(char input[], int n)
+int searchInput(char str[], int n)
 {
-	char qmark[255] = "\"";
-	strcat(input, qmark);
-	strcat(qmark, input);
-	strncpy(input, qmark, n);
-	return 0;
+    char ch;
+    int i;
+	fflush(stdin);
+    for (i = 0; (ch = getchar()) != '\n'; i++)
+    {
+        if (i < n)
+        {
+            str[i] = ch;
+        }       
+    }
+    str[i] = '\0';
+    return i;
 }
 
-int userInput()
+int id_searchInput_check(char str[], int input_len, int n)
 {
-	char input[INPUT_LENGTH]; //"11111\0"
-	//printf("%d", sizeof(input));
+    int i;
+    char ch;
+    int j;
+    for (i = 0; i < n; i++)
+    {
+        j = 1;
+        ch = str[i];
+        if ((isdigit(ch) == 0) || (input_len != 5) || (ch == '\0'))
+        {
+            j = 0;
+            printf("Invalid ID! Please input exactly positive 5 digit numbers.\n");
+            printf("Please try again another input.\n");
+            break;
+        }
+    }
+    return j;
+}
+
+void conc(char *temp, int n)
+{
+    char a[255] = "\"";
+    strcat(temp, a);
+    strcat(a, temp);
+    strncpy(temp, a, n);
+}
+
+int search(char *temp)
+{
 	int found = 0;
-	char p1[255];
-	char p2[255];
-	char *data;
-	char *in;
-	fp = fopen("Inventory_ST_NoBOM.csv", "r");
-	printf("\n\nPlease input item ID number: ");
-	scanf("%s", input);
-	//printf("%d", sizeof(input));
-	if (strlen(input) != 5 || input[0] == '-' || isdigit(input[0]) == 0 || isdigit(input[1]) == 0 || isdigit(input[2]) == 0 ||
-		isdigit(input[3]) == 0 || isdigit(input[4]) == 0)
-	{
-		//for invalid input
-		printf("Please input exactly positive 5 digit numbers.\n");
-		printf("Please try again another input.\n");
-		userInput();
-	}
-	else {
-		//valid input
-		printf("\nYou are searching for a item with ID number %s...\n\n", input);
-		concatenation(input, sizeof(input));
-		while (fgets (p1, sizeof(p1), fp))
-		//fgets(char p1, sizeofp1 is the number of characters to be copied, file pointer)
+	char s1[255];
+    char s2[255];
+    char *data;
+    FILE *fp;
+    
+    fp = fopen("Inventory_ST_NoBOM.csv", "r");
+    conc(temp, sizeof(temp));
+    
+    while (fgets(s1,sizeof(s1),fp))
+    {
+    	//found = 0;
+        strncpy(s2, s1, sizeof(s2));
+        data = strtok(s2, ",");
+
+		for (int i = 0; data; i++)
 		{
-		strncpy(p2, p1, sizeof(p2));
-		//printf("%d", sizeof(p2));
-		data = strtok(p2, ",");
-			while (data)
+			if(strcmp(temp, data) == 0)
 			{
-				if (strcmp(input, data) == 0)
+				found = 1;
+				char *id1;
+				int column, row;
+				printf("ID\tDescription\t\t\t\t\tQuantity\tExp. Date\tPrice(PHP)\n\n");
+				column = 0;
+				row++;
+				if (row == 1)
 				{
-					found = 1;
-					char *id1;
-					char *id2;
-					int column, row;
-					printf("ID\tDescription\t\t\t\t\tQuantity\tExp. Date\tPrice(PHP)\n\n");
-					column = 0;
-					row++;
-					if (row == 1)
-					{
-						continue;
-					}
-					id1 = strtok(p1, ",\"\"");
-					while (id1)
-					{
-					    if (column == 1) 
-						{
-                    	printf("\t");
-                		}
-		                if (column == 2) 
-						{
-		                   printf("\t\t\t");
-		                }
-		                if (column == 3) 
-						{
-		                    printf("\t\t");
-		                }
-		                if (column == 4) 
-						{
-		                    printf("\t\t");
-		                }
-		                printf("%s", id1);
-		                id1 = strtok(NULL, ",\"\"");
-		                column++;
-					}
-					printf("\nWould you like to try searching another item?\n");
-					printf("Press: Y - YES, B - BACK TO MAIN MENU\nPlease input your choice: ");
-					userChoice[1] = 1;
-					while(userChoice[1] == 1)
-					{
-						scanf(" %c", &userChoice[0]);
-						
-						switch(userChoice[0])
-						{
-						case 'y':
-						case 'Y': 
-							userInput();
-							userChoice[1] = 0;
-							break;
-						//case 'b':
-						//case 'B':
-							//searchMenu();
-							//userChoice[1] = 0;
-							//break;
-						default: 
-							printf("Please choose from what is shown.\nPlease input again: ");
-							break;
-						}
-					}
+					continue;
 				}
-				data = strtok(NULL, ",");
+				id1 = strtok(s1, ",\"\"");
+				while (id1)
+				{
+					if (column == 1) 
+					{
+                    	printf("\t");
+                	}
+		            if (column == 2) 
+					{
+		                printf("\t\t\t");
+		            }
+		            if (column == 3) 
+					{
+		            	printf("\t\t");
+		            }
+		            if (column == 4) 
+					{
+		                printf("\t\t");
+		            }
+		            printf("%s", id1);
+		            id1 = strtok(NULL, ",\"\"");
+		            column++;
+				}
 			}
-		}
+			data = strtok(NULL, ",");
+		}	
+	}
 	fclose(fp);
 	if (found == 0)
 	{
 		printf("ID\tDescription\t\t\t\t\tQuantity\tExp. Date\tPrice(PHP))\n\n");
-		printf("The item does not exists.\n");
-		printf("\nWould you like to try searching another item?\n");
-		printf("Press: Y - YES, B - BACK TO MAIN MENU\nPlease input your choice: ");
-		userChoice[1] = 1;
-		while(userChoice[1] == 1)
-		{
-			scanf(" %c", &userChoice[0]);		
-			switch(userChoice[0])
-			{
-				case 'y':
-				case 'Y': 
-						userInput();
-						userChoice[1] = 0;
-						break;
-				//case 'b':
-				//case 'B':
-						//searchMenu();
-						//userChoice[1] = 0;
-						//break;
-				default: 
-						printf("Please choose from what is shown.\nPlease input again: ");
-						break;
-			}
-		
-		}
+		printf("The item does not exists.\n");	
 	}
-	return 0;
+	return 1;
+	//
 }
-}
-	
+
 int main()
 {
-	printf("\nSEARCH FOR AN ITEM\n");
-	userInput();
-	return 0;
+    char temp[255]; 
+    char choice[255];
+    int input_len = 0;
+    printf("***SEARCH INVENTORY ITEM***\n\n");
+    while (1)
+    {
+        printf("\nPlease input item ID number: ");
+        input_len = searchInput(temp, 5);
+        if (id_searchInput_check(temp, input_len, 5))
+        {
+            if (search(temp))
+            {
+ 				break;
+            }
+        }
+    }
+
 }

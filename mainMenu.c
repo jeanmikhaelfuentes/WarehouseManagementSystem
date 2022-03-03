@@ -8,7 +8,6 @@ int mainMenu();
 
 
 int main(){
-
     if(inventoryFile = fopen("inventory.csv", "r")){
         fclose(inventoryFile);
         mainMenu();
@@ -17,7 +16,6 @@ int main(){
         fclose(inventoryFile);
         mainMenu();
     }
- 
     return 0;
 }
 
@@ -62,7 +60,7 @@ int mainMenu(){
             userChoice[1] = 0;
             break;
         default: 
-            printf("\nPlease choose a valid input.\n\nPlease try to input again: ");
+            printf("Please choose a valid input.\n\nPlease try to input again: ");
             break;
         } 
     }
