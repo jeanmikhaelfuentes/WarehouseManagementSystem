@@ -278,14 +278,14 @@ int update(char *temp)
 
     fp = fopen(INV_FILE, "r");
     fp1 = fopen("temp.csv", "w");
-    conc(temp, sizeof(temp));
+    //conc(temp, sizeof(temp));
     printf("Searching for Product %s...\n", temp);
     
     while (fgets(s1,sizeof(s1),fp))
     {
         found = 0;
         strncpy(s2, s1, sizeof(s2));
-        data = strtok(s1, ",");
+        data = strtok(s1, ",\"\"");
  
         for (int i = 0; data; i++)
         {
@@ -298,7 +298,7 @@ int update(char *temp)
                 for (int j = 0; j < 5 ; j++)
                 {
                     newValues(fp1, data, j);
-                    data = strtok(NULL, ",");
+                    data = strtok(NULL, ",\"\"");
                 }
                 break;
             }
@@ -306,7 +306,7 @@ int update(char *temp)
             {
                 fprintf(fp1, "%s", s2);
             }
-            data = strtok(NULL, ",");
+            data = strtok(NULL, ",\"\"");
         }
     }
 
