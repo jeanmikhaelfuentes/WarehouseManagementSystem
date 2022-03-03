@@ -28,8 +28,8 @@ void endChoice(){
                 case 'm':
                 case 'M':
                     userChoice[1]=0;
-                    printf("Main Menu");
-                    //mainMenu();
+                    //printf("Main Menu");
+                    mainMenu();
                     break;
                 case 'X':
                 case 'x':

@@ -1,27 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#define ID_LEN 7
-#define EXP_DATE_LEN 12
-#define DESCRIPTION_LEN 52
-#define QUANTITY_LEN 6
-#define PRICE_LEN 22
-
-struct Products
-{
-    char ID[ID_LEN];
-    char Description[DESCRIPTION_LEN];
-    char Quantity[QUANTITY_LEN];
-    char ExpiryDate[EXP_DATE_LEN];
-    char Price[PRICE_LEN];
-}P1;
 
 // input function
-int input(char str[], int n)
+int inputAdd(char str[], int n)
 {
     char ch;
     int i;
+    fflush(stdin);
     for (i = 0; (ch = getchar()) != '\n'; i++)
     {
         if (i < n)
@@ -34,7 +17,7 @@ int input(char str[], int n)
 }
 
 // ID - returns a 1 if input is valid & 0 otherwise. 
-int id_input_check(char str[], int input_len, int n)
+int id_inputAdd_check(char str[], int input_len, int n)
 {
     int i;
     char ch;
@@ -54,7 +37,7 @@ int id_input_check(char str[], int input_len, int n)
 }
 
 // DESCRIPTION - returns a 1 if input is valid & 0 otherwise. 
-int desc_input_check(char str[], int input_len, int n)
+int desc_inputAdd_check(char str[], int input_len, int n)
 {
     int i;
     char ch;
@@ -74,7 +57,7 @@ int desc_input_check(char str[], int input_len, int n)
 }
 
 // QUANTITY - returns a 1 if input is valid & 0 otherwise. 
-int qty_input_check(char *str, int input_len, int n)
+int qty_inputAdd_check(char *str, int input_len, int n)
 {
     int i;
     char ch;
@@ -94,7 +77,7 @@ int qty_input_check(char *str, int input_len, int n)
 }
 
 // EXPIRY DATE - returns a 1 if input is valid & 0 otherwise.
-int expd_input_check(char *str, int input_len, int n)
+int expd_inputAdd_check(char *str, int input_len, int n)
 {
     int i;
     int j = 1;
@@ -159,7 +142,7 @@ int expd_input_check(char *str, int input_len, int n)
     return j;
 }
 // PRICE - returns a 1 if input is valid & 0 otherwise.
-int price_input_check(char *str, int input_len, int n)
+int price_inputAdd_check(char *str, int input_len, int n)
 {
     int i, j, k;
     char ch;
@@ -178,7 +161,7 @@ int price_input_check(char *str, int input_len, int n)
 }
 
 // function to add  "" from strings
-void conc(char *temp, int n)
+void concAdd(char *temp, int n)
 {
     char a[255] = "\"";
     strcat(temp, a);
@@ -187,7 +170,7 @@ void conc(char *temp, int n)
 }
 
 // search if id exists
-int search(char *temp)
+int searchAdd(char *temp)
 {
 	int found = 0;
 	int match = 0;
@@ -196,8 +179,8 @@ int search(char *temp)
     char *data;
     FILE *fp;
     
-    fp = fopen("Inventory_ST_NoBOM.csv", "r");
-    conc(temp, sizeof(temp));
+    fp = fopen(INV_FILE, "r");
+    concAdd(temp, sizeof(temp));
     
     while (fgets(s1,sizeof(s1),fp))
     {
@@ -223,10 +206,9 @@ int search(char *temp)
 }
 
 // main
-int main()
+int addInventory()
 {
-    FILE *fp1;
-    fp1 = fopen("Inventory.csv", "a");
+    fp = fopen(INV_FILE, "a");
     char *data;
     int len;
     float p;
@@ -235,14 +217,14 @@ int main()
     do
     {
         printf("\nEnter ID: ");
-        len = input(P1.ID, ID_LEN);
-        if (id_input_check(P1.ID, len, 5))
+        len = inputAdd(P1.ID, ID_LEN);
+        if (id_inputAdd_check(P1.ID, len, 5))
         {
-            if (search(P1.ID) == 1)
+            if (searchAdd(P1.ID) == 1)
             {
                 len = 0;
             }else{
-                fprintf(fp1, "\n%s,", P1.ID);
+                fprintf(fp, "\n%s,", P1.ID);
             }
         }else{
             len = 0;
@@ -252,11 +234,11 @@ int main()
     do
     {
         printf("Enter Description: ");
-        len = input(P1.Description, DESCRIPTION_LEN);
-        if (desc_input_check(P1.Description, len, 50))
+        len = inputAdd(P1.Description, DESCRIPTION_LEN);
+        if (desc_inputAdd_check(P1.Description, len, 50))
         {
-            conc(P1.Description,sizeof(P1.Description));
-            fprintf(fp1, "%s,", P1.Description);
+            concAdd(P1.Description,sizeof(P1.Description));
+            fprintf(fp, "%s,", P1.Description);
         }else{
             len = 0;
         }
@@ -265,11 +247,11 @@ int main()
     do
     {
         printf("Enter Quantity: ");
-        len = input(P1.Quantity, QUANTITY_LEN);
-        if (qty_input_check(P1.Quantity, len, len))
+        len = inputAdd(P1.Quantity, QUANTITY_LEN);
+        if (qty_inputAdd_check(P1.Quantity, len, len))
         {
-            conc(P1.Quantity,sizeof(P1.Quantity));
-            fprintf(fp1, "%s,", P1.Quantity);
+            concAdd(P1.Quantity,sizeof(P1.Quantity));
+            fprintf(fp, "%s,", P1.Quantity);
         }else{
             len = 0;
         }
@@ -278,11 +260,11 @@ int main()
     do
     {
         printf("Enter Expiry Date(YYYY-MM-DD): ");
-        len = input(P1.ExpiryDate, EXP_DATE_LEN);
-        if (expd_input_check(P1.ExpiryDate, len, len))
+        len = inputAdd(P1.ExpiryDate, EXP_DATE_LEN);
+        if (expd_inputAdd_check(P1.ExpiryDate, len, len))
         {
-            conc(P1.ExpiryDate,sizeof(P1.ExpiryDate));
-            fprintf(fp1, "%s,", P1.ExpiryDate);
+            concAdd(P1.ExpiryDate,sizeof(P1.ExpiryDate));
+            fprintf(fp, "%s,", P1.ExpiryDate);
         }else{
             len = 0;
         }
@@ -291,15 +273,18 @@ int main()
     do
     {
         printf("Enter Price(Php): ");
-        len = input(P1.Price, PRICE_LEN);
-        if (price_input_check(P1.Price, len, len))
+        len = inputAdd(P1.Price, PRICE_LEN);
+        if (price_inputAdd_check(P1.Price, len, len))
         {
             p = atof(P1.Price);
-            fprintf(fp1, "\"%.2f\"", p);
+            fprintf(fp, "\"%.2f\"", p);
         }else{
             len = 0;
         }
     } while (len == 0);
 
+    printf("\nItem added successfully!\n");
+    fclose(fp);
+    endChoice();
     return 0;
 }

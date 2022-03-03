@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "globalDeclerations.h"
-//#include "addInventory.h"
+#include "addInventory.h"
 #include "updateInventory.h"
 #include "viewInventoryList.h"
 #include "searchInventory.h"
@@ -23,7 +23,7 @@ int main(){
 }
 
 int mainMenu(){
-    printf("Group-2 Inventory Management System\n\n");
+    printf("\n\nGroup-2 Inventory Management System\n\n");
     printf("Main Menu\n");
     printf("[A] Add Inventory Item\n");
     printf("[B] Update Inventory Item\n");
@@ -40,7 +40,7 @@ int mainMenu(){
         case 'a':
         case 'A': 
             printf("Add Inventory Item\n");
-            //addInventory();
+            addInventory();
             userChoice[1] = 0;
             break;
         case 'b':
