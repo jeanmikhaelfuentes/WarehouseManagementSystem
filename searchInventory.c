@@ -39,7 +39,8 @@ int userInput()
 		printf("Please try again another input.\n");
 		userInput();
 	}
-	else {
+	else 
+	{
 		//valid input
 		printf("\nYou are searching for a item with ID number %s...\n\n", input);
 		concatenation(input, sizeof(input));
@@ -151,7 +152,7 @@ int userInput()
 	
 int main()
 {
-	printf("\nSEARCH FOR AN ITEM\n");
+	printf("\n***SEARCH FOR AN ITEM***\n");
 	userInput();
 	return 0;
 }
