@@ -2,6 +2,7 @@
 #include <string.h>
 char userChoice[2];
 void nullChecker();
+void endChoice();
 FILE *inventoryFile;
 int size;
 
@@ -11,32 +12,12 @@ int main(){
 
         if(size == 0){
         printf("Inventory is empty...\n\n");
-        printf("Exit or go back to main menu? (X -- Exit or M -- Main Menu)\n");
-        printf("Please input choice: ");
-        userChoice[1]=1;
-
-        while(userChoice[1]==1){
-            scanf(" %1c",&userChoice[0]);
-            switch(userChoice[0]){
-                case 'm':
-                case 'M':
-                    userChoice[1]=0;
-                    printf("main menu");
-                    break;
-                case 'X':
-                case 'x':
-                    userChoice[1]=0;
-                    printf("Thank you for using our inventory management system");
-                    break;
-                default:
-                    printf("Invalid Input, please try again: ");
-                    userChoice[1]=1;
-            }
-        }
+        endChoice();
     }else{
-            inventoryFile = fopen("inventory.csv", "r");
+            inventoryFile = fopen("Inventory_ST_NoBOM.csv", "r");
             int row = 0;
             int column = 0;
+            int i = 0;
             printf("ID\tDescription\t\t\t\tQuantity\tExp. Date\tPrices (PHP)\n\n");
             while (fgets(buffer, 1024, inventoryFile)) {
                 column = 0;
@@ -54,7 +35,7 @@ int main(){
     
                     // Quantity
                     if (column == 2) {
-                    printf("\t\t\t");
+                        printf("\t\t");
                     }
                     // Exp. Date
                     if (column == 3) {
@@ -69,16 +50,43 @@ int main(){
                     value = strtok(NULL, ",\"\"");
                     column++;
                 }
+                i++;
             }
         }
-
     fclose(inventoryFile);
+    endChoice();
     return 0;
 }
 
 void nullChecker(){
-    inventoryFile = fopen("inventory.csv", "r");
+    inventoryFile = fopen("Inventory_ST_NoBOM", "r");
     fseek(inventoryFile, 0, SEEK_END);
     size = ftell(inventoryFile);
     fclose(inventoryFile);
 }
+
+void endChoice(){
+    printf("\n\n\nExit or go back to main menu? (X -- Exit or M -- Main Menu)\n");
+    printf("Please input choice: ");
+    userChoice[1]=1;
+
+    while(userChoice[1]==1){
+        scanf(" %1c",&userChoice[0]);
+            switch(userChoice[0]){
+                case 'm':
+                case 'M':
+                    userChoice[1]=0;
+                    printf("Main Menu");
+                    //mainMenu();
+                    break;
+                case 'X':
+                case 'x':
+                    userChoice[1]=0;
+                    printf("Thank you for using our inventory management system");
+                    break;
+                default:
+                    printf("Invalid Input, please try again: ");
+                    userChoice[1]=1;
+            }
+        }
+    }
