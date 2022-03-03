@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-
-
 FILE *inventoryFile;
 unsigned char userChoice[2];
 int mainMenu();
@@ -11,7 +9,8 @@ int main(){
     if(inventoryFile = fopen("inventory.csv", "r")){
         fclose(inventoryFile);
         mainMenu();
-    }else{
+    }
+    else{
         inventoryFile = fopen("inventory.csv", "w");
         fclose(inventoryFile);
         mainMenu();
