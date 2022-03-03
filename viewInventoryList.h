@@ -6,12 +6,11 @@ void endChoice();
 int viewInventoryList(){
         nullChecker();
         char buffer[1024];
-
         if(size == 0){
         printf("Inventory is empty...\n\n");
         endChoice();
-    }else{
-            fp = fopen("Inventory_ST_NoBOM.csv", "r");
+        }else{
+            fp = fopen(INV_FILE, "r");
             int row = 0;
             int column = 0;
             int i = 0;
@@ -50,7 +49,7 @@ int viewInventoryList(){
 }
 
 void nullChecker(){
-    fp = fopen("Inventory_ST_NoBOM", "r");
+    fp = fopen(INV_FILE, "r");
     fseek(fp, 0, SEEK_END);
     size = ftell(fp);
     fclose(fp);
