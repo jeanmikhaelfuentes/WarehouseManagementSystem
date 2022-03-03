@@ -186,14 +186,51 @@ void conc(char *temp, int n)
     strncpy(temp, a, n);
 }
 
+// search if id exists
+int search(char *temp)
+{
+	int found = 0;
+	int match = 0;
+	char s1[255];
+    char s2[255];
+    char *data;
+    FILE *fp;
+    
+    fp = fopen("Inventory_ST_NoBOM.csv", "r");
+    conc(temp, sizeof(temp));
+    
+    while (fgets(s1,sizeof(s1),fp))
+    {
+    	//found = 0;
+        strncpy(s2, s1, sizeof(s2));
+        data = strtok(s2, ",");
+
+		for (int i = 0; data; i++)
+		{
+			if(strcmp(temp, data) == 0)
+			{
+				found = 1;
+				char *id1;
+				char *id2;
+				int column, row;
+				printf("The item already exists.");
+			}
+			data = strtok(NULL, ",");
+		}	
+	}
+	fclose(fp);
+	return found;
+}
+
 // main
-void main()
+int main()
 {
     FILE *fp1;
     fp1 = fopen("Inventory.csv", "a");
     char *data;
     int len;
     float p;
+    int found = 0;
 
     do
     {
@@ -201,12 +238,16 @@ void main()
         len = input(P1.ID, ID_LEN);
         if (id_input_check(P1.ID, len, 5))
         {
-            conc(P1.ID,sizeof(P1.ID));
-            fprintf(fp1, "%s,", P1.ID);
+            if (search(P1.ID) == 1)
+            {
+                len = 0;
+            }else{
+                fprintf(fp1, "\n%s,", P1.ID);
+            }
         }else{
-            len = NULL;
+            len = 0;
         }
-    } while (len == NULL);
+    } while (len == 0);
 
     do
     {
@@ -217,9 +258,9 @@ void main()
             conc(P1.Description,sizeof(P1.Description));
             fprintf(fp1, "%s,", P1.Description);
         }else{
-            len = NULL;
+            len = 0;
         }
-    } while (len == NULL);
+    } while (len == 0);
 
     do
     {
@@ -230,9 +271,9 @@ void main()
             conc(P1.Quantity,sizeof(P1.Quantity));
             fprintf(fp1, "%s,", P1.Quantity);
         }else{
-            len = NULL;
+            len = 0;
         }
-    } while (len == NULL);
+    } while (len == 0);
 
     do
     {
@@ -243,9 +284,9 @@ void main()
             conc(P1.ExpiryDate,sizeof(P1.ExpiryDate));
             fprintf(fp1, "%s,", P1.ExpiryDate);
         }else{
-            len = NULL;
+            len = 0;
         }
-    } while (len == NULL);
+    } while (len == 0);
 
     do
     {
@@ -254,9 +295,11 @@ void main()
         if (price_input_check(P1.Price, len, len))
         {
             p = atof(P1.Price);
-            fprintf(fp1, "\"%.2f\"\n", p);
+            fprintf(fp1, "\"%.2f\"", p);
         }else{
-            len = NULL;
+            len = 0;
         }
-    } while (len == NULL);
+    } while (len == 0);
+
+    return 0;
 }
