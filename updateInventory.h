@@ -175,7 +175,7 @@ void newValues(FILE *fp1, char *data, int j)
                 if (strcmp(P1.ID, "\0") == 0) 
                 {
                     printf("ID has no changes.\n");
-                    fprintf(fp1, "%s,", data);
+                    fprintf(fp1, "\"%s\",", data);
                     break;       
                 }
                 if (id_input_check(P1.ID, len, 5))
@@ -194,7 +194,7 @@ void newValues(FILE *fp1, char *data, int j)
                 if (strcmp(P1.Description, "\0") == 0) 
                 {
                     printf("Description has no changes.\n");
-                    fprintf(fp1, "%s,", data);
+                    fprintf(fp1, "\"%s\",", data);
                     break;
                 }
                 if (desc_input_check(P1.Description, len, 50))
@@ -213,7 +213,7 @@ void newValues(FILE *fp1, char *data, int j)
                 if (strcmp(P1.Quantity, "\0") == 0)
                 {
                     printf("Quantity has no changes.\n");
-                    fprintf(fp1, "%s,", data);
+                    fprintf(fp1, "\"%s\",", data);
                     break;
                 }
                 if (qty_input_check(P1.Quantity, len, len))
@@ -232,7 +232,7 @@ void newValues(FILE *fp1, char *data, int j)
                 if (strcmp(P1.ExpiryDate, "\0") == 0)
                 {
                     printf("Expiry Date has no changes.\n");
-                    fprintf(fp1, "%s,", data);
+                    fprintf(fp1, "\"%s\",", data);
                     break;
                 }
                 if (expd_input_check(P1.ExpiryDate, len, len))
@@ -251,7 +251,7 @@ void newValues(FILE *fp1, char *data, int j)
                 if (strcmp(P1.Price, "\0") == 0)
                 {
                     printf("Price has no changes.\n");
-                    fprintf(fp1, "%s", data);
+                    fprintf(fp1, "\"%s\"", data);
                     break;
                 }
                 if (price_input_check(P1.Price, len, len))
