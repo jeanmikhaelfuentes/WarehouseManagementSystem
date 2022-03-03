@@ -3,7 +3,6 @@
 #include <string.h>
 #include <ctype.h>
 #define ID_LEN 7
-unsigned char userChoice;
 int search(char *temp);
 int main();
 FILE *fp;
