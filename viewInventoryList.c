@@ -22,17 +22,13 @@ int main(){
             while (fgets(buffer, 1024, inventoryFile)) {
                 column = 0;
                 row++;
-
                 // Splitting the data
                 char* value = strtok(buffer, ",\"\"");
-    
                 while (value) {
-                
                     // Description
                     if (column == 1) {
                         printf("\t");
                     }
-    
                     // Quantity
                     if (column == 2) {
                         printf("\t\t");
@@ -45,12 +41,10 @@ int main(){
                     if (column == 4) {
                         printf("\t\t");
                     }
-    
                     printf("%s", value);
                     value = strtok(NULL, ",\"\"");
                     column++;
                 }
-                i++;
             }
         }
     fclose(inventoryFile);
@@ -69,7 +63,6 @@ void endChoice(){
     printf("\n\n\nExit or go back to main menu? (X -- Exit or M -- Main Menu)\n");
     printf("Please input choice: ");
     userChoice[1]=1;
-
     while(userChoice[1]==1){
         scanf(" %1c",&userChoice[0]);
             switch(userChoice[0]){
