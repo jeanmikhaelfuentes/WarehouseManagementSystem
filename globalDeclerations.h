@@ -29,6 +29,11 @@ void endChoice(){
                 case 'M':
                     userChoice[1]=0;
                     //printf("Main Menu");
+                    memset(P1.ID,NULL,ID_LEN);
+                    memset(P1.Description,NULL,DESCRIPTION_LEN);
+                    memset(P1.Quantity,NULL,QUANTITY_LEN);
+                    memset(P1.ExpiryDate,NULL,EXP_DATE_LEN);
+                    memset(P1.Price,NULL,PRICE_LEN);
                     mainMenu();
                     break;
                 case 'X':

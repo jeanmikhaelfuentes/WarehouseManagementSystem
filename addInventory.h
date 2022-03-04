@@ -208,12 +208,26 @@ int searchAdd(char *temp)
 // main
 int addInventory()
 {
-    fp = fopen(INV_FILE, "a");
+    fp = fopen(INV_FILE, "r");
     char *data;
     int len;
     float p;
     int found = 0;
+    char buff[255];
 
+    fseek(fp, -1, SEEK_END);
+    fgets(buff, 255, fp);
+    printf("%s\t", buff);
+    char *q = buff;
+    printf("%s\n", q);
+    fclose(fp);
+    if (buff == q)
+    {
+        fp = fopen(INV_FILE, "a");
+        fprintf(fp, "\n");
+        fclose(fp);
+    } 
+    fp = fopen(INV_FILE, "a");
     do
     {
         printf("\nEnter ID: ");
@@ -224,7 +238,7 @@ int addInventory()
             {
                 len = 0;
             }else{
-                fprintf(fp, "\n%s,", P1.ID);
+                fprintf(fp, "%s,", P1.ID);
             }
         }else{
             len = 0;
