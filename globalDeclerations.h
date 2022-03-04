@@ -1,5 +1,5 @@
 #define ID_LEN 7
-#define EXP_DATE_LEN 12
+#define EXP_DATE_LEN 20
 #define DESCRIPTION_LEN 52
 #define QUANTITY_LEN 6
 #define PRICE_LEN 13
