@@ -12,6 +12,15 @@
 int main(){
     if(fp = fopen(INV_FILE, "r")){
         fclose(fp);
+        if(fp = fopen("counter.txt", "r")){
+            fclose(fp);
+        }else{
+            fp = fopen("counter.txt", "w");
+            fclose(fp);
+            fp = fopen(INV_FILE, "a");
+            fprintf(fp, "\n");
+            fclose(fp);
+        }
         mainMenu();
     }
     else{
