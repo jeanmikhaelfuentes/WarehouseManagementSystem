@@ -170,12 +170,13 @@ void newValues(FILE *fp1, char *data, int j)
         case 0: //Enter new ID
             while (1)
             {
+                fflush(stdin);
                 printf("\nEnter new ID: ");
                 len = input(P1.ID, ID_LEN);
                 if (strcmp(P1.ID, "\0") == 0) 
                 {
                     printf("ID has no changes.\n");
-                    fprintf(fp1, "\"%s\",", data);
+                    fprintf(fp1, "%s,", data);
                     break;       
                 }
                 if (id_input_check(P1.ID, len, 5))
@@ -194,7 +195,7 @@ void newValues(FILE *fp1, char *data, int j)
                 if (strcmp(P1.Description, "\0") == 0) 
                 {
                     printf("Description has no changes.\n");
-                    fprintf(fp1, "\"%s\",", data);
+                    fprintf(fp1, "%s,", data);
                     break;
                 }
                 if (desc_input_check(P1.Description, len, 50))
@@ -213,7 +214,7 @@ void newValues(FILE *fp1, char *data, int j)
                 if (strcmp(P1.Quantity, "\0") == 0)
                 {
                     printf("Quantity has no changes.\n");
-                    fprintf(fp1, "\"%s\",", data);
+                    fprintf(fp1, "%s,", data);
                     break;
                 }
                 if (qty_input_check(P1.Quantity, len, len))
@@ -232,7 +233,7 @@ void newValues(FILE *fp1, char *data, int j)
                 if (strcmp(P1.ExpiryDate, "\0") == 0)
                 {
                     printf("Expiry Date has no changes.\n");
-                    fprintf(fp1, "\"%s\",", data);
+                    fprintf(fp1, "%s,", data);
                     break;
                 }
                 if (expd_input_check(P1.ExpiryDate, len, len))
@@ -251,7 +252,7 @@ void newValues(FILE *fp1, char *data, int j)
                 if (strcmp(P1.Price, "\0") == 0)
                 {
                     printf("Price has no changes.\n");
-                    fprintf(fp1, "\"%s\"\n", data);
+                    fprintf(fp1, "%s", data);
                     break;
                 }
                 if (price_input_check(P1.Price, len, len))
@@ -278,14 +279,14 @@ int update(char *temp)
 
     fp = fopen(INV_FILE, "r");
     fp1 = fopen("temp.csv", "w");
-    //conc(temp, sizeof(temp));
+    conc(temp, sizeof(temp));
     printf("Searching for Product %s...\n", temp);
     
     while (fgets(s1,sizeof(s1),fp))
     {
         found = 0;
         strncpy(s2, s1, sizeof(s2));
-        data = strtok(s1, ",\"\"");
+        data = strtok(s1, ",");
  
         for (int i = 0; data; i++)
         {
@@ -298,7 +299,7 @@ int update(char *temp)
                 for (int j = 0; j < 5 ; j++)
                 {
                     newValues(fp1, data, j);
-                    data = strtok(NULL, ",\"\"");
+                    data = strtok(NULL, ",");
                 }
                 break;
             }
@@ -306,7 +307,7 @@ int update(char *temp)
             {
                 fprintf(fp1, "%s", s2);
             }
-            data = strtok(NULL, ",\"\"");
+            data = strtok(NULL, ",");
         }
     }
 
